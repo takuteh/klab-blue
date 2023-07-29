@@ -12,4 +12,4 @@ def motorDriveRotate(timeRotate):
 def motorDriveReverseRotate(timeRotate):
     subprocess.call(["./twomotor", "1", "-1", str(timeRotate)])
     print("Rotate ", timeRotate, "[s]")
-
+	
