@@ -1,0 +1,5 @@
+﻿g++ -fPIC -Wall -I ./inc -c -o DistanceSensor.o DistanceSensor.cpp
+g++ -fPIC -Wall -I ./inc -c -o TwoMotorMain.o TwoMotorMain.cpp
+g++ -fPIC -Wall -I ./inc -c -o safeTwoMotorWrapper.o safeTwoMotorWrapper.cpp
+
+g++ -fPIC -Wall -shared -o safeTwoMotor.so DistanceSensor.o TwoMotorMain.o safeTwoMotorWrapper.o libVL53L0X_Rasp.a

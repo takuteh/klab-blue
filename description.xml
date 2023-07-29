@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root xmlns="urn:schemas-upnp-org:device-1-0">
+  <specVersion>
+    <major>1</major>
+    <minor>0</minor>
+  </specVersion>
+  <device>
+    <deviceType>urn:schemas-upnp-org:device:Basic:1</deviceType>
+    <friendlyName>S-FATE_Server</friendlyName>
+    <manufacturer>KuniiLab</manufacturer>
+    <modelName>S-FATE_Server</modelName>
+    <UDN>uuid:9478f4f4-e7c5-4f3b-ad74-f9566f3cc0d9</UDN>
+  </device>
+</root>

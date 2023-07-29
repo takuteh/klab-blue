@@ -1,0 +1,2 @@
+#!/bin/sh
+sudo i2cset -y 1 0x68 0x00 0x01
