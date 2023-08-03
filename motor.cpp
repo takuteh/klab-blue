@@ -19,27 +19,28 @@ using std::string;
 
 class Motor{
     public:
-        int fd;
+        int voltage_addr;
         char buf[2];
         Motor();
         void drv1_slave();
         void drv2_slave();
         void rotate(string drv,string direction);
     private:
+        int fd;
         const int i2cAddr1=MdrvAddr1;
         const int i2cAddr2=MdrvAddr2;
 
-        const int forward=0x01;
-        const int backward=0x10;
-        const int stop=0x11;
-        const int neutral=0x00;
+        const int forward_addr=0x01;
+        const int backward_addr=0x10;
+        const int stop_addr=0x11;
+        const int neutral_addr=0x00;
 };
 
 Motor::Motor(){
     	if ((this->fd = open(I2C_DevName, O_RDWR)) < 0) {
 		printf("Faild to open i2c port! ><\n");
          }
-        buf[0]=0x00;
+        buf[]=0x00;
 
 }
 
@@ -52,12 +53,10 @@ void Motor::drv1_slave(){
 void Motor::drv2_slave(){
     	if (ioctl(this->fd, I2C_SLAVE, i2cAddr2) < 0) {
 		printf("Faild to open port...\n");
-//		return 1;
 	}
 }
 
 void Motor::rotate(string drv,string direction){
-buf[1]=0;
 if(drv=="drv1"){
 this->drv1_slave();
 }else if(drv=="drv2"){
@@ -66,13 +65,13 @@ this->drv2_slave();
 cout<<drv<<" is invalid string!!"<<endl;
 }
     if(direction=="forward"){
-        buf[1]=0x09<<2|this->forward;
+        buf[1]=this->voltage_addr<<2|this->forward_addr;
     }else if(direction=="backward"){
-        buf[1]=0x09<<2|this->backward;
+        buf[1]=this->voltage_addr<<2|this->backward_addr;
     }else if(direction=="stop"){
-        buf[1]=0x09<<2|this->stop;
+        buf[1]=this->voltage_addr<<2|this->stop_addr;
     }else if(direction=="neutral"){
-        buf[1]=0x00;
+        buf[1]=this->neutral_addr;
     }
 
     if(write(fd,buf,2)!=2){
@@ -84,6 +83,7 @@ int main(){
 char buf[2];
 int fd;
     Motor motor;
+    motor.voltage_addr=0x15;
     motor.rotate("drv1","forward");
     motor.rotate("drv2","forward");
     sleep(2);
