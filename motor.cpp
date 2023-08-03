@@ -8,41 +8,22 @@
 #include <termios.h>
 #include <unistd.h>
 #include <linux/i2c-dev.h>
+#include "motor.h"
 
 using std::cout;
 using std::endl;
 using std::string;
+using std::cin;
 
-#define MdrvAddr1 0x60
-#define MdrvAddr2 0x64
 #define I2C_DevName  "/dev/i2c-1"
 
-class Motor{
-    public:
-        int voltage_addr;
-        char buf[2];
-        Motor();
-        void drv1_slave();
-        void drv2_slave();
-        void rotate(string drv,string direction);
-    private:
-        int fd;
-        const int i2cAddr1=MdrvAddr1;
-        const int i2cAddr2=MdrvAddr2;
-
-        const int forward_addr=0x01;
-        const int backward_addr=0x10;
-        const int stop_addr=0x11;
-        const int neutral_addr=0x00;
-};
-
+namespace blue{
 Motor::Motor(){
     	if ((this->fd = open(I2C_DevName, O_RDWR)) < 0) {
 		printf("Faild to open i2c port! ><\n");
          }
-        buf[]=0x00;
-
-}
+        buf[0]=0x00;
+       }
 
 void Motor::drv1_slave(){
 	if (ioctl(this->fd, I2C_SLAVE, i2cAddr1) < 0) {
@@ -55,8 +36,12 @@ void Motor::drv2_slave(){
 		printf("Faild to open port...\n");
 	}
 }
+void Motor::convert_v_to_addr(){
+this->voltage_addr=(voltage-0.48)/(5.06-0.48)*(0x3F-0x06);
+}
 
 void Motor::rotate(string drv,string direction){
+convert_v_to_addr();
 if(drv=="drv1"){
 this->drv1_slave();
 }else if(drv=="drv2"){
@@ -72,22 +57,32 @@ cout<<drv<<" is invalid string!!"<<endl;
         buf[1]=this->voltage_addr<<2|this->stop_addr;
     }else if(direction=="neutral"){
         buf[1]=this->neutral_addr;
-    }
+    }else{
+	cout<<"invalid string!"<<endl;
+   }
 
-    if(write(fd,buf,2)!=2){
+    if(write(this->fd,buf,2)!=2){
     cout<<"error"<<endl;
     }
 }
+}//namespace blue
 
-int main(){
-char buf[2];
-int fd;
-    Motor motor;
-    motor.voltage_addr=0x15;
-    motor.rotate("drv1","forward");
-    motor.rotate("drv2","forward");
-    sleep(2);
-    motor.rotate("drv1","neutral");
-    motor.rotate("drv2","neutral");
-return 0;
-}
+// int main(){
+// while(1){
+//     Motor motor;
+//    cout<<"input voltage:";
+//     cin>>motor.voltage;
+//     motor.rotate("drv1","forward");
+//     motor.rotate("drv2","backward");
+//     sleep(1);
+//     motor.rotate("drv1","neutral");
+//     motor.rotate("drv2","neutral");
+// sleep(1);
+//     motor.rotate("drv1","backward");
+//     motor.rotate("drv2","forward");
+// sleep(1);
+//     motor.rotate("drv1","neutral");
+//     motor.rotate("drv2","neutral");
+// }
+// return 0;
+// }
