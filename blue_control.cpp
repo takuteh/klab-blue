@@ -4,37 +4,37 @@
 blue::Motor motor;
 
 namespace blue{
-void forward(float voltage,int time){
+void Blue_control::forward(float voltage,float time){
     motor.rotate("drv1","forward",voltage);
     motor.rotate("drv2","forward",voltage);
-    sleep(time);
+    usleep(time*1000*1000);
     motor.rotate("drv1","neutral",voltage);
-    motor.rotate("drv1","neutral",voltage);
+    motor.rotate("drv2","neutral",voltage);
 
 }
-void backward(float voltage,int time){
+void Blue_control::backward(float voltage,float time){
     motor.rotate("drv1","backward",voltage);
     motor.rotate("drv2","backward",voltage);
-    sleep(time);
+    usleep(time*1000*1000);
     motor.rotate("drv1","neutral",voltage);
-    motor.rotate("drv1","neutral",voltage);
+    motor.rotate("drv2","neutral",voltage);
 
 }
 
-void right(float voltage,int time){
+void Blue_control::right(float voltage,float time){
     motor.rotate("drv1","backward",voltage);
     motor.rotate("drv2","forward",voltage);
-    sleep(time);
+    usleep(time*1000*1000);
     motor.rotate("drv1","neutral",voltage);
-    motor.rotate("drv1","neutral",voltage);
+    motor.rotate("drv2","neutral",voltage);
 
 }
-void left(float voltage,int time){
+void Blue_control::left(float voltage,float time){
     motor.rotate("drv1","forward",voltage);
     motor.rotate("drv2","backward",voltage);
-    sleep(time);
+    usleep(time*1000*1000);
     motor.rotate("drv1","neutral",voltage);
-    motor.rotate("drv1","neutral",voltage);
+    motor.rotate("drv2","neutral",voltage);
 
 }
 }//namespace blue

@@ -11,10 +11,10 @@ class Motor{
         int voltage_addr;
         char buf[2];
         Motor();
-	    float voltage;
+	float voltage;
         void drv1_slave();
         void drv2_slave();
-        void rotate(string drv,string direction);
+        void rotate(string drv,string direction,float v);
 	void convert_v_to_addr();
     private:
         int fd;

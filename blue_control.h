@@ -4,10 +4,10 @@
 namespace blue{
 class Blue_control{
     public:
-        void forward(float voltage,int mode);
-        void backward(float voltage,int mode);
-        void right(float voltage,int mode);
-        void left(float voltage,int mode);
+        void forward(float voltage,float time);
+        void backward(float voltage,float time);
+        void right(float voltage,float time);
+        void left(float voltage,float time);
 };
 }//namespace blue
 
