@@ -4,6 +4,6 @@
 
 ⚫︎radicon_arrow.cppはキーボードの矢印キーで操作が可能になっている
 キーコードは以下のURL参照↓
-http://logic777.web.fc2.com/ne/index42.html
+http://logic777.web.fc2.com/ne/index42.htm
 
 ⚫︎コンパイルの際はblue_control.cpp/motor.cpp/(arrowのみkey_input.cpp)をリンクする
