@@ -1,0 +1,4 @@
+CXX=g++
+SRCS=radicon_arrow.cpp
+
+

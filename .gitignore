@@ -1,0 +1,23 @@
+# library
+*.so
+*.a
+
+# object file
+*.o
+
+# log
+*.log
+
+# etc
+.vscode/
+.DS_Store
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+build/
+
+# dir
+bin/
+lib/
